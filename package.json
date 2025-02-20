@@ -9,16 +9,24 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@ant-design/nextjs-registry": "^1.0.2",
+    "@next/bundle-analyzer": "^15.1.7",
+    "@trivago/prettier-plugin-sort-imports": "^5.2.2",
+    "antd": "^5.24.1",
+    "axios": "^1.7.9",
+    "eslint-config-prettier": "^10.0.1",
+    "next": "14.2.24",
+    "next-auth": "^4.24.11",
     "react": "^18",
     "react-dom": "^18",
-    "next": "14.2.24"
+    "sass": "^1.85.0"
   },
   "devDependencies": {
-    "typescript": "^5",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "eslint": "^8",
-    "eslint-config-next": "14.2.24"
+    "eslint-config-next": "14.2.24",
+    "typescript": "^5"
   }
 }
