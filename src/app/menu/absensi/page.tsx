@@ -1,17 +1,12 @@
 import { Metadata } from "next";
 import { FC } from "react";
-import MenuList from "./_component/menu-list";
 
 export const metadata: Metadata = {
-  title: "Menu",
+  title: "Absensi",
 };
 
 const Page: FC = () => {
-  return (
-    <div>
-      <MenuList />
-    </div>
-  );
+  return <div>Absensi</div>
 };
 
 export default Page;
