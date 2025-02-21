@@ -1,46 +1,49 @@
-'use client';
+"use client";
 
+import { useServices } from "@root/src/context/service/context";
+import useAuth from "@root/src/hooks/useAuth";
 import { Button, Card, Flex, Form, Input } from "antd";
 import { useForm } from "antd/es/form/Form";
-import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import React, { memo } from "react"
+import React, { memo, useEffect } from "react";
 
 type FieldType = {
   username?: string;
   password?: string;
 };
 
-const FormUsername = 'username';
-const FormPassword = 'password';
+const FormUsername = "username";
+const FormPassword = "password";
 
 const LoginFormClient = (): JSX.Element => {
   const router = useRouter();
   const [form] = useForm();
-  const { data: session, status } = useSession();
+  const { isAuthenticated, sessionStatus } = useAuth();
+  const { authUseCase } = useServices();
 
-  console.log(session)
+  useEffect(() => {
+    if (isAuthenticated) {
+      router.push("/menu");
+    }
+  }, [isAuthenticated, router]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
       const username = form.getFieldValue(FormUsername);
       const password = form.getFieldValue(FormPassword);
-      const res = await signIn('credentials', {
-        username,
-        password,
-        redirect: false
-      })
+      const res = await authUseCase.login(username, password);
 
       if (res?.ok) {
-        const callbackUrl = new URLSearchParams(window.location.search).get("callbackUrl") || "/dashboard";
+        const callbackUrl =
+          new URLSearchParams(window.location.search).get("callbackUrl") ||
+          "/menu";
         router.push(callbackUrl);
       }
-
     } catch (error) {
       console.error(error);
     }
-  }
+  };
 
   return (
     <Card>
@@ -53,28 +56,32 @@ const LoginFormClient = (): JSX.Element => {
         <Form.Item<FieldType>
           label="Username"
           name={FormUsername}
-          rules={[{ required: true, message: 'Username is required.' }]}
+          rules={[{ required: true, message: "Username is required." }]}
         >
           <Input />
         </Form.Item>
         <Form.Item<FieldType>
           label="Password"
           name={FormPassword}
-          rules={[{ required: true, message: 'Please input your password!' }]}
+          rules={[{ required: true, message: "Please input your password!" }]}
         >
           <Input.Password />
         </Form.Item>
 
         <Form.Item>
           <Flex justify="end">
-            <Button type="primary" htmlType="submit">
+            <Button
+              type="primary"
+              htmlType="submit"
+              disabled={sessionStatus === "loading"}
+            >
               Submit
             </Button>
           </Flex>
         </Form.Item>
       </Form>
     </Card>
-  )
-}
+  );
+};
 
 export default memo(LoginFormClient);

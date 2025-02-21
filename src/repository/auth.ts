@@ -1,10 +1,9 @@
-import { httpClient } from "../api/http-client";
-import { AuthPort } from "../ports/auth";
-import { User } from "../types/User";
+import { AuthPort } from "@src/ports/auth";
+import { User } from "@src/types/User";
+import { MOCK_USERS } from "./mock";
 
 export class AuthRepository implements AuthPort {
-  async getUserByUsername(username: string): Promise<User> {
-    const response = await httpClient.get(`/users/${username}`);
-    return response.data;
+  async getUserByUsername(username: string): Promise<User | null> {
+    return MOCK_USERS.find((user) => user.username === username) || null;
   }
 }

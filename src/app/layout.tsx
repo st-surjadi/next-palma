@@ -3,10 +3,9 @@ import "./globals.scss";
 import { ConfigProvider } from "antd";
 import type { Metadata } from "next";
 import { theme } from "@root/theme.config";
-import { Inter } from "next/font/google";
-import Head from "next/head";
 import { AntdRegistry } from "@ant-design/nextjs-registry";
 import NextAuthSessionProviders from "../components/next-auth/provider";
+import { ServiceProvider } from "../context/service/context";
 
 export const metadata: Metadata = {
   title: "Palma",
@@ -26,7 +25,9 @@ export default function RootLayout({
       <body>
         <AntdRegistry>
           <ConfigProvider theme={theme}>
-            <NextAuthSessionProviders>{children}</NextAuthSessionProviders>
+            <ServiceProvider>
+              <NextAuthSessionProviders>{children}</NextAuthSessionProviders>
+            </ServiceProvider>
           </ConfigProvider>
         </AntdRegistry>
       </body>

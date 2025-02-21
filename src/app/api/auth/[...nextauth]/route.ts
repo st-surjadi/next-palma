@@ -1,5 +1,10 @@
+import { AuthRepository } from "@root/src/repository/auth";
+import { AuthUseCase } from "@root/src/usecases/auth";
 import NextAuth, { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
+
+const authRepository = new AuthRepository();
+const authUseCase = new AuthUseCase(authRepository);
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -10,12 +15,23 @@ export const authOptions: NextAuthOptions = {
         password: {},
       },
       async authorize(credentials) {
-        const user = { id: "1", name: "Steven", username: "steven", password: "123123", role: 'admin' };
+        try {
+          const user = await authUseCase.getUserByUsername(
+            credentials?.username
+          );
 
-        if (credentials?.username === user.username && credentials?.password === user.password) {
-          return user;
+          if (!user || user.password !== credentials?.password) {
+            throw new Error("Invalid credentials.");
+          }
+          return {
+            id: user.id,
+            name: user.name,
+            role: user.role,
+            email: user.email,
+          };
+        } catch (error) {
+          throw error;
         }
-        return null;
       },
     }),
   ],
@@ -23,11 +39,8 @@ export const authOptions: NextAuthOptions = {
     signIn: "/auth/login",
   },
   callbacks: {
-    async signIn({ user, account, profile }) {
-      return true;
-    },
     async redirect({ url, baseUrl }) {
-      return url.startsWith(baseUrl) ? url : baseUrl + "/dashboard";
+      return url.startsWith(baseUrl) ? url : baseUrl + "/menu";
     },
     async jwt({ token, user }) {
       if (user) {
