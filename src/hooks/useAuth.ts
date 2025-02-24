@@ -1,11 +1,11 @@
-import { useSession } from "next-auth/react";
-import { useMemo } from "react";
+import { useSession } from 'next-auth/react';
+import { useMemo } from 'react';
 
 const useAuth = () => {
   const { status } = useSession();
 
   const isAuthenticated = useMemo(() => {
-    return status === "authenticated";
+    return status === 'authenticated';
   }, [status]);
 
   const sessionStatus = useMemo(() => {

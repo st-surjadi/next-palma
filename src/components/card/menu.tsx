@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import { Card } from "antd";
-import Link from "next/link";
+import { Card } from 'antd';
+import Link from 'next/link';
 
 export type CardMenuType = {
   name: string;

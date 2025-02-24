@@ -1,24 +1,24 @@
 /** @type {import('next').NextConfig} */
 
-import NextBundleAnalyzer from "@next/bundle-analyzer";
+import NextBundleAnalyzer from '@next/bundle-analyzer';
 
 const withBundleAnalyzer = NextBundleAnalyzer({
-  enabled: process.env.ANALYZE === "true",
+  enabled: process.env.ANALYZE === 'true',
 });
 
 const nextConfig = {
-  output: "standalone",
+  output: 'standalone',
   async headers() {
     return [
       {
-        source: "/(.*)",
+        source: '/(.*)',
         headers: [
           {
-            key: "X-Frame-Options",
-            value: "DENY",
+            key: 'X-Frame-Options',
+            value: 'DENY',
           },
           {
-            key: "Content-Security-Options",
+            key: 'Content-Security-Options',
             value: "frame-ancestors 'none';",
           },
         ],
@@ -28,8 +28,8 @@ const nextConfig = {
   async redirects() {
     return [
       {
-        source: "/",
-        destination: "/auth/login",
+        source: '/',
+        destination: '/auth/login',
         permanent: false,
       },
     ];

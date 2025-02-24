@@ -1,8 +1,8 @@
-import { FC } from "react";
-import LoginFormClient from "./client";
+import { FC } from 'react';
+import LoginFormClient from './client';
 
 const LoginForm: FC = async () => {
-  return <LoginFormClient></LoginFormClient>
-}
+  return <LoginFormClient></LoginFormClient>;
+};
 
 export default LoginForm;

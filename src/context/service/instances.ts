@@ -1,5 +1,5 @@
-import { AuthUseCase } from "@src/usecases/auth";
-import { AuthRepository } from "@src/repository/auth";
+import { AuthUseCase } from '@src/usecases/auth';
+import { AuthRepository } from '@src/repository/auth';
 
 export const createServiceInstances = () => {
   const authRepository = new AuthRepository();

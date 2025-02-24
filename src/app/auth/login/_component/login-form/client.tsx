@@ -1,19 +1,19 @@
-"use client";
+'use client';
 
-import { useServices } from "@root/src/context/service/context";
-import useAuth from "@root/src/hooks/useAuth";
-import { Button, Card, Flex, Form, Input } from "antd";
-import { useForm } from "antd/es/form/Form";
-import { useRouter } from "next/navigation";
-import React, { memo, useEffect } from "react";
+import { useServices } from '@root/src/context/service/context';
+import useAuth from '@root/src/hooks/useAuth';
+import { Button, Card, Flex, Form, Input } from 'antd';
+import { useForm } from 'antd/es/form/Form';
+import { useRouter } from 'next/navigation';
+import React, { memo, useEffect } from 'react';
 
 type FieldType = {
   username?: string;
   password?: string;
 };
 
-const FormUsername = "username";
-const FormPassword = "password";
+const FormUsername = 'username';
+const FormPassword = 'password';
 
 const LoginFormClient = (): JSX.Element => {
   const router = useRouter();
@@ -23,7 +23,7 @@ const LoginFormClient = (): JSX.Element => {
 
   useEffect(() => {
     if (isAuthenticated) {
-      router.push("/menu");
+      router.push('/menu');
     }
   }, [isAuthenticated, router]);
 
@@ -35,9 +35,7 @@ const LoginFormClient = (): JSX.Element => {
       const res = await authUseCase.login(username, password);
 
       if (res?.ok) {
-        const callbackUrl =
-          new URLSearchParams(window.location.search).get("callbackUrl") ||
-          "/menu";
+        const callbackUrl = new URLSearchParams(window.location.search).get('callbackUrl') || '/menu';
         router.push(callbackUrl);
       }
     } catch (error) {
@@ -47,34 +45,25 @@ const LoginFormClient = (): JSX.Element => {
 
   return (
     <Card>
-      <Form
-        form={form}
-        autoComplete="off"
-        requiredMark="optional"
-        onSubmitCapture={handleSubmit}
-      >
+      <Form form={form} autoComplete="off" requiredMark="optional" onSubmitCapture={handleSubmit}>
         <Form.Item<FieldType>
           label="Username"
           name={FormUsername}
-          rules={[{ required: true, message: "Username is required." }]}
+          rules={[{ required: true, message: 'Username is required.' }]}
         >
           <Input />
         </Form.Item>
         <Form.Item<FieldType>
           label="Password"
           name={FormPassword}
-          rules={[{ required: true, message: "Please input your password!" }]}
+          rules={[{ required: true, message: 'Please input your password!' }]}
         >
           <Input.Password />
         </Form.Item>
 
         <Form.Item>
           <Flex justify="end">
-            <Button
-              type="primary"
-              htmlType="submit"
-              disabled={sessionStatus === "loading"}
-            >
+            <Button type="primary" htmlType="submit" disabled={sessionStatus === 'loading'}>
               Submit
             </Button>
           </Flex>

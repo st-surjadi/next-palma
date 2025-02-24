@@ -5,21 +5,3 @@ $palma-brown-secondary: #545251;
 $palma-brown-tertiary: #84845c;
 $palma-green-primary: #86be57;
 $palma-green-secondary: #649046;
-
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
-
-body {
-  margin: 0;
-}
-
-.bg-default {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 100vh;
-  background-color: $palma-brown-primary;
-}

@@ -1,7 +1,7 @@
-import { AuthRepository } from "@root/src/repository/auth";
-import { AuthUseCase } from "@root/src/usecases/auth";
-import NextAuth, { NextAuthOptions } from "next-auth";
-import CredentialsProvider from "next-auth/providers/credentials";
+import { AuthRepository } from '@root/src/repository/auth';
+import { AuthUseCase } from '@root/src/usecases/auth';
+import NextAuth, { NextAuthOptions } from 'next-auth';
+import CredentialsProvider from 'next-auth/providers/credentials';
 
 const authRepository = new AuthRepository();
 const authUseCase = new AuthUseCase(authRepository);
@@ -9,19 +9,17 @@ const authUseCase = new AuthUseCase(authRepository);
 export const authOptions: NextAuthOptions = {
   providers: [
     CredentialsProvider({
-      name: "Credentials",
+      name: 'Credentials',
       credentials: {
         username: {},
         password: {},
       },
       async authorize(credentials) {
         try {
-          const user = await authUseCase.getUserByUsername(
-            credentials?.username
-          );
+          const user = await authUseCase.getUserByUsername(credentials?.username);
 
           if (!user || user.password !== credentials?.password) {
-            throw new Error("Invalid credentials.");
+            throw new Error('Invalid credentials.');
           }
           return {
             id: user.id,
@@ -36,11 +34,11 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
   pages: {
-    signIn: "/auth/login",
+    signIn: '/auth/login',
   },
   callbacks: {
     async redirect({ url, baseUrl }) {
-      return url.startsWith(baseUrl) ? url : baseUrl + "/menu";
+      return url.startsWith(baseUrl) ? url : baseUrl + '/menu';
     },
     async jwt({ token, user }) {
       if (user) {
@@ -56,7 +54,7 @@ export const authOptions: NextAuthOptions = {
     },
   },
   session: {
-    strategy: "jwt",
+    strategy: 'jwt',
   },
   secret: process.env.NEXTAUTH_SECRET,
 };
