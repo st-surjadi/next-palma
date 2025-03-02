@@ -1,6 +1,6 @@
 import { AuthPort } from '@src/ports/auth';
 import { User } from '@src/types/User';
-import { signIn, SignInResponse } from 'next-auth/react';
+import { signIn, SignInResponse, signOut, SignOutParams } from 'next-auth/react';
 
 export class AuthUseCase {
   private authRepository: AuthPort;
@@ -9,12 +9,16 @@ export class AuthUseCase {
     this.authRepository = authRepository;
   }
 
-  async login(username: string, password: string): Promise<SignInResponse | undefined> {
+  async login(username: string, password: string, redirect: boolean): Promise<SignInResponse | undefined> {
     return await signIn('credentials', {
       username,
       password,
-      redirect: false,
+      redirect,
     });
+  }
+
+  async logout(options?: SignOutParams): Promise<undefined> {
+    return signOut(options);
   }
 
   async getUserByUsername(username: string | undefined): Promise<User | null> {

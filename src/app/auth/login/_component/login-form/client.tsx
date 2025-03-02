@@ -32,7 +32,7 @@ const LoginFormClient = (): JSX.Element => {
     try {
       const username = form.getFieldValue(FormUsername);
       const password = form.getFieldValue(FormPassword);
-      const res = await authUseCase.login(username, password);
+      const res = await authUseCase.login(username, password, false);
 
       if (res?.ok) {
         const callbackUrl = new URLSearchParams(window.location.search).get('callbackUrl') || '/menu';

@@ -35,11 +35,9 @@ export const authOptions: NextAuthOptions = {
   ],
   pages: {
     signIn: '/auth/login',
+    signOut: '/auth/login',
   },
   callbacks: {
-    async redirect({ url, baseUrl }) {
-      return url.startsWith(baseUrl) ? url : baseUrl + '/menu';
-    },
     async jwt({ token, user }) {
       if (user) {
         token.role = user.role;
